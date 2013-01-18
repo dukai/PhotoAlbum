@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Photo Album</title>
+	<link rel="stylesheet" href="css/reset.css" type="text/css" />
+	<style>
+		#pa_b{width:960px; margin:20px auto;}
+		#pg{position:relative; padding:0 20px;overflow:hidden;}
+		#pg_pre, #pg_next{position:absolute;background:#580;display:block; width:20px; height:52px; overflow:hidden;cursor:pointer;z-index:10;}
+		#pg_pre:hover, #pg_next:hover{background:#0f0;}
+		#pg_pre:active, #pg_next:active{background:#f90;}
+		#pg_pre{left:0;}
+		#pg_next{right:0;}
+		#pts{height:52px; overflow:hidden; position:relative;}
+		#pts li{float:left; margin:0 4px 0 0;cursor:pointer; border:2px solid #eee;vertical-align:bottom;}
+		#pts li.selected{border-color:#09f;}
+		#pts li:hover{border-color:#f90;}
+		#pts li img{width:48px; height:48px; display:block;}
+		
+		#ps{ text-align:center;border:1px solid #ccc; background:#f1f1f1; margin-top:10px;position:relative;}
+		#ps_pre, #ps_next{position:absolute; z-index:9;top:50%; display:block; width:80px; height:80px; background:#900;margin-top:-40px;}
+		#ps_pre:hover, #ps_next:hover{background:#f00;}
+		#ps_pre:active, #ps_next:active{background:#f90;}
+		#ps_pre{ left:0;}
+		#ps_next{right:0;}
+	</style>
+</head>
+<body>
+<!--
+	pa_b: photo album box
+	pg: photo gallary
+	pts: photo thumbnails
+	ps: photo show
+-->
+<div id="pa_b">
+	<div id="pg">
+		<span id="pg_pre">preview</span><span id="pg_next">next</span>
+		<ul id="pts">
+			<li id="img_0"><img src="images/p(1).jpg" /></li>
+			<li id="img_1"><img src="images/p(2).jpg" /></li>
+			<li id="img_2"><img src="images/p(3).jpg" /></li>
+			<li id="img_3"><img src="images/p(4).jpg" /></li>
+			<li id="img_4"><img src="images/p(5).jpg" /></li>
+			<li id="img_5"><img src="images/p(6).jpg" /></li>
+			<li id="img_6"><img src="images/p(7).jpg" /></li>
+			<li id="img_7"><img src="images/p(8).jpg" /></li>
+			<li id="img_8"><img src="images/p(9).jpg" /></li>
+			<li id="img_9"><img src="images/p(10).jpg" /></li>
+			<li id="img_10"><img src="images/p(11).jpg" /></li>
+			<li id="img_11"><img src="images/p(12).jpg" /></li>
+			<li id="img_12"><img src="images/p(13).jpg" /></li>
+			<li id="img_13"><img src="images/p(14).jpg" /></li>
+			<li id="img_14"><img src="images/p(15).jpg" /></li>
+			<li id="img_15"><img src="images/p(16).jpg" /></li>
+			<li id="img_16"><img src="images/p(17).jpg" /></li>
+			<li id="img_17"><img src="images/p(18).jpg" /></li>
+			<li id="img_18"><img src="images/p(19).jpg" /></li>
+			<li id="img_19"><img src="images/p(20).jpg" /></li>
+			<li id="img_20"><img src="images/p(21).jpg" /></li>
+			<li id="img_21"><img src="images/p(22).jpg" /></li>
+			<li id="img_22"><img src="images/p(23).jpg" /></li>
+			<li id="img_23"><img src="images/p(24).jpg" /></li>
+			<li id="img_24"><img src="images/p(25).jpg" /></li>
+			<li id="img_25"><img src="images/p(26).jpg" /></li>
+			<li id="img_26"><img src="images/p(27).jpg" /></li>
+			<li id="img_27"><img src="images/p(28).jpg" /></li>
+			<li id="img_28"><img src="images/p(29).jpg" /></li>
+			<li id="img_29"><img src="images/p(30).jpg" /></li>
+			<li id="img_30"><img src="images/p(31).jpg" /></li>
+			<li id="img_31"><img src="images/p(32).jpg" /></li>
+			<li id="img_32"><img src="images/p(33).jpg" /></li>
+			<li id="img_33"><img src="images/p(34).jpg" /></li>
+			<li id="img_34"><img src="images/p(35).jpg" /></li>
+			<li id="img_35"><img src="images/p(36).jpg" /></li>
+		</ul>
+	</div>
+	<div id="ps">
+		<a id="ps_pre" href="javascript:void(0);">preview</a><a id="ps_next" href="javascript:void(0);">next</a>
+		<img id="big_img" src="images/loader.gif"/>
+	</div>
+</div>
+<script src="js/jquery-1.5.1.min.js"></script>
+<script>
+	var cursor = 0;
+	var total = $('#pts li').length;
+	var firstImg = new Image();
+	$('#img_' + cursor).addClass('selected');
+	firstImg.src = $('#img_' + cursor + ' img').attr('src');
+	if(parseInt(firstImg.width) < 958){
+		$('#big_img').attr('width', firstImg.width);
+	}else{
+		$('#big_img').attr('width', 958);
+	}
+	
+	$('#big_img').attr('src', firstImg.src);
+	
+	$('#pts').css('width', 56 * total);
+	$('#pts li').click(function(e){
+		var imgSrc = this.getElementsByTagName('img')[0].src;
+		var bigImg = new Image();
+		bigImg.src = imgSrc;
+		if(parseInt(bigImg.width) < 958){
+			$('#big_img').attr('width', bigImg.width);
+		}else{
+			$('#big_img').attr('width', 958);
+		}
+		
+		$('#big_img').attr('src', imgSrc);
+		$('#img_' + cursor).removeClass('selected');
+		$(this).addClass('selected');
+		cursor = parseInt(this.id.split('_')[1]);
+	});
+	
+	$('#pg_next').click(function(e){
+		gallaryLeft();
+	});
+	$('#pg_pre').click(function(e){
+		gallaryRight();
+	});
+	
+	$('#ps_next').click(function(e){
+		$('#img_' + cursor).removeClass('selected');
+		
+		var left = $('#img_' + cursor)[0].offsetLeft + parseInt($('#pts').css('left'));
+		if(left >= 56 * 15){
+			if(cursor != total - 1){
+				gallaryLeft();
+			}
+			else{
+				gallaryRight(total - parseInt( 920 / 56));
+			}
+		}
+		
+		if(cursor >= total - 1){
+			cursor = 0;
+		}else{
+			cursor ++;
+		}
+		showImg(cursor);
+	});
+	$('#ps_pre').click(function(e){
+		$('#img_' + cursor).removeClass('selected');
+		var left = $('#img_' + cursor)[0].offsetLeft + parseInt($('#pts').css('left'));
+		if(left <= 0){
+			if(cursor != 0){
+				gallaryRight();
+			}
+			else{
+				gallaryLeft(total - parseInt( 920 / 56));
+			}
+		}
+		if(cursor <= 0){
+			cursor = total - 1;
+		}else{
+			cursor --;
+		}
+		
+		showImg(cursor);
+	});
+	
+	function nextImg(){
+		cursor ++;
+	}
+	function preImg(){
+		cursor --;
+	}
+	
+	function showImg(cursor){
+		$('#img_' + cursor).addClass('selected');
+		var tempImg = new Image();
+		tempImg.src = $('#img_' + cursor + ' img').attr('src');
+		if(parseInt(tempImg.width) < 958){
+			$('#big_img').attr('width', tempImg.width);
+		}else{
+			$('#big_img').attr('width', 958);
+		}
+		
+		$('#big_img').attr('src', tempImg.src);
+	}
+	
+	function gallaryLeft(step){
+		var value;
+		if(step){
+			value = '-=' + (56 * step) + 'px';
+		}else{
+			value = '-=56px';
+		}
+		if(parseInt($('#pts').css('left')) <= -(54 *36 - 920)){
+			return;
+		}
+		$('#pts').animate({'left': value}, 'fast');
+	}
+	function gallaryRight(step){
+		var value;
+		if(step){
+			value = '+=' + (56 * step) + 'px';
+		}else{
+			value = '+=56px';
+		}
+		
+		if(parseInt($('#pts').css('left')) >= 0)
+			return;
+		$('#pts').animate({'left': value},'fast');
+	}
+</script>
+</body>
+</html>

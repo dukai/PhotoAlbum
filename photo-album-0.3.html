@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Photo Album</title>
+	<link rel="stylesheet" href="css/reset.css" type="text/css" />
+	<style>
+		#pa_b{width:720px; margin:20px auto;overflow:hidden;}
+		#pg{position:relative; padding:0 20px;overflow:hidden;height:64px;}
+		#pg_pre, #pg_next{position:absolute;background:#580;display:block; width:20px; height:64px; overflow:hidden;cursor:pointer;z-index:10;}
+		#pg_pre.disable, #pg_next.disable{background:#ccc;}
+		#pg_pre.disable:hover, #pg_next.disable:hover{background:#ccc;}
+		#pg_pre:hover, #pg_next:hover{background:#0f0;}
+		#pg_pre:active, #pg_next:active{background:#f90;}
+		#pg_pre{left:0;}
+		#pg_next{right:0;}
+		#pts{height:64px; overflow:hidden; position:relative;}
+		#pts li{float:left; margin:0 4px 0 0;cursor:pointer; border:2px solid #eee;width:60px;height:60px;*font-size:53px;display: table-cell;vertical-align:middle;text-align:center;*display: block; line-height:60px;}
+		#pts li.selected{border-color:#09f;}
+		#pts li:hover{border-color:#f90;}
+		#pts li img{display:block;vertical-align:middle;}
+		
+		#ps{ text-align:center;border:1px solid #ccc; margin-top:10px;position:relative; height:600px; position:relative;background:url(images/loader.gif) center center no-repeat;background-color:#f1f1f1; }
+		#ps img{position:relative; top:50%;}
+		#ps_pre, #ps_next{position:absolute; z-index:9;top:50%; display:block; width:80px; height:80px; background:#900;margin-top:-40px;}
+		#ps_pre:hover, #ps_next:hover{background:#f00;}
+		#ps_pre:active, #ps_next:active{background:#f90;}
+		#ps_pre{ left:0;}
+		#ps_next{right:0;}
+		#big_img{ }
+	</style>
+</head>
+<body>
+<!--
+	pa_b: photo album box
+	pg: photo gallary
+	pts: photo thumbnails
+	ps: photo show
+-->
+<div id="pa_b">
+	<div id="pg">
+		<span id="pg_pre" class="pg_pre">preview</span><span id="pg_next" class="pg_next">next</span>
+		<ul id="pts">
+			<li id="img_0" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/4756d92165e6fa2801499e369fdfb51e.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/4756d92165e6fa2801499e369fdfb51e.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/4756d92165e6fa2801499e369fdfb51e.jpg" /></li>
+			<li id="img_1" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/c30e8538b63ac36ea6b44784a13d6400.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/c30e8538b63ac36ea6b44784a13d6400.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/c30e8538b63ac36ea6b44784a13d6400.jpg" /></li>
+			<li id="img_2" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/ff8d408a332458fc2d52fcc3ee83f200.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/ff8d408a332458fc2d52fcc3ee83f200.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/ff8d408a332458fc2d52fcc3ee83f200.jpg" /></li>
+			<li id="img_3" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/2dc5f8cf547cc44fa267c0c14cc80660.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/2dc5f8cf547cc44fa267c0c14cc80660.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/2dc5f8cf547cc44fa267c0c14cc80660.jpg" /></li>
+			<li id="img_4" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/3d0b552f23064de8ae18630dec8cce5d.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/3d0b552f23064de8ae18630dec8cce5d.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/3d0b552f23064de8ae18630dec8cce5d.jpg" /></li>
+			<li id="img_5" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/4756d92165e6fa2801499e369fdfb51e.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/4756d92165e6fa2801499e369fdfb51e.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/4756d92165e6fa2801499e369fdfb51e.jpg" /></li>
+			<li id="img_6" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/c30e8538b63ac36ea6b44784a13d6400.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/c30e8538b63ac36ea6b44784a13d6400.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/c30e8538b63ac36ea6b44784a13d6400.jpg" /></li>
+			<li id="img_7" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/ff8d408a332458fc2d52fcc3ee83f200.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/ff8d408a332458fc2d52fcc3ee83f200.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/ff8d408a332458fc2d52fcc3ee83f200.jpg" /></li>
+			<li id="img_8" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/2dc5f8cf547cc44fa267c0c14cc80660.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/2dc5f8cf547cc44fa267c0c14cc80660.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/2dc5f8cf547cc44fa267c0c14cc80660.jpg" /></li>
+			<li id="img_9" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/3d0b552f23064de8ae18630dec8cce5d.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/3d0b552f23064de8ae18630dec8cce5d.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/3d0b552f23064de8ae18630dec8cce5d.jpg" /></li>
+			<li id="img_10" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/4756d92165e6fa2801499e369fdfb51e.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/4756d92165e6fa2801499e369fdfb51e.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/4756d92165e6fa2801499e369fdfb51e.jpg" /></li>
+			<li id="img_11" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/c30e8538b63ac36ea6b44784a13d6400.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/c30e8538b63ac36ea6b44784a13d6400.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/c30e8538b63ac36ea6b44784a13d6400.jpg" /></li>
+			<li id="img_12" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/ff8d408a332458fc2d52fcc3ee83f200.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/ff8d408a332458fc2d52fcc3ee83f200.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/ff8d408a332458fc2d52fcc3ee83f200.jpg" /></li>
+			<li id="img_13" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/2dc5f8cf547cc44fa267c0c14cc80660.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/2dc5f8cf547cc44fa267c0c14cc80660.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/2dc5f8cf547cc44fa267c0c14cc80660.jpg" /></li>
+			<li id="img_14" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/3d0b552f23064de8ae18630dec8cce5d.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/3d0b552f23064de8ae18630dec8cce5d.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/3d0b552f23064de8ae18630dec8cce5d.jpg" /></li>
+			<li id="img_15" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/4756d92165e6fa2801499e369fdfb51e.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/4756d92165e6fa2801499e369fdfb51e.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/4756d92165e6fa2801499e369fdfb51e.jpg" /></li>
+			<li id="img_16" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/c30e8538b63ac36ea6b44784a13d6400.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/c30e8538b63ac36ea6b44784a13d6400.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/c30e8538b63ac36ea6b44784a13d6400.jpg" /></li>
+			<li id="img_17" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/ff8d408a332458fc2d52fcc3ee83f200.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/ff8d408a332458fc2d52fcc3ee83f200.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/ff8d408a332458fc2d52fcc3ee83f200.jpg" /></li>
+			<li id="img_18" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/2dc5f8cf547cc44fa267c0c14cc80660.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/2dc5f8cf547cc44fa267c0c14cc80660.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/2dc5f8cf547cc44fa267c0c14cc80660.jpg" /></li>
+			<li id="img_19" class="thumb"><img src="http://img.scimg.cn/userupload/auction/items/1046/111374/60x60/3d0b552f23064de8ae18630dec8cce5d.jpg" middleurl="http://img.scimg.cn/userupload/auction/items/1046/111374/600x600/3d0b552f23064de8ae18630dec8cce5d.jpg" bigurl="http://img.scimg.cn/userupload/auction/items/1046/111374/orgi/3d0b552f23064de8ae18630dec8cce5d.jpg" /></li>
+		</ul>
+	</div>
+	<div id="ps">
+		<a id="ps_pre" class="ps_pre" href="javascript:void(0);">preview</a><a id="ps_next" class="ps_next" href="javascript:void(0);">next</a>
+		<a id="photo_big_url" href="#1">
+			<img id="big_img" src="images/lzimg.gif"/>
+		</a>
+	</div>
+</div>
+<script src="js/jquery-1.5.1.min.js"></script>
+<script src="js/dk_tools.js"></script>
+<script src="js/photo-album.js"></script>
+<script>
+var scpa = new SCPhotoAlbum('pa_b', 'pts', 'ps');
+</script>
+</body>
+</html>

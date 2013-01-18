@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Photo Album</title>
+	<link rel="stylesheet" href="css/reset.css" type="text/css" />
+	<style>
+		#pa_b{width:720px; margin:20px auto;overflow:hidden;}
+		#pg{position:relative; padding:0 20px;overflow:hidden;}
+		#pg_pre, #pg_next{position:absolute;background:#580;display:block; width:20px; height:64px; overflow:hidden;cursor:pointer;z-index:10;}
+		#pg_pre:hover, #pg_next:hover{background:#0f0;}
+		#pg_pre:active, #pg_next:active{background:#f90;}
+		#pg_pre{left:0;}
+		#pg_next{right:0;}
+		#pts{height:64px; overflow:hidden; position:relative;}
+		#pts li{float:left; margin:0 4px 0 0;cursor:pointer; border:2px solid #eee;vertical-align:bottom;}
+		#pts li.selected{border-color:#09f;}
+		#pts li:hover{border-color:#f90;}
+		#pts li img{width:60px; height:60px; display:block;}
+		
+		#ps{ text-align:center;border:1px solid #ccc; background:#f1f1f1; margin-top:10px;position:relative; height:800px; position:relative;}
+		#ps img{position:relative; top:50%;}
+		#ps_pre, #ps_next{position:absolute; z-index:9;top:50%; display:block; width:80px; height:80px; background:#900;margin-top:-40px;}
+		#ps_pre:hover, #ps_next:hover{background:#f00;}
+		#ps_pre:active, #ps_next:active{background:#f90;}
+		#ps_pre{ left:0;}
+		#ps_next{right:0;}
+		#big_img{ background:url(images/loader.gif) center center no-repeat;}
+	</style>
+</head>
+<body>
+<!--
+	pa_b: photo album box
+	pg: photo gallary
+	pts: photo thumbnails
+	ps: photo show
+-->
+<div id="pa_b">
+	<div id="pg">
+		<span id="pg_pre" class="pg_pre">preview</span><span id="pg_next" class="pg_next">next</span>
+		<ul id="pts">
+			<li id="img_0" class="thumb"><img src="images/p(1).jpg" middleurl="images/p(1).jpg" bigurl="images/p(1).jpg" /></li>
+			<li id="img_1" class="thumb"><img src="images/p(2).jpg" middleurl="images/p(2).jpg" bigurl="images/p(2).jpg" /></li>
+			<li id="img_2" class="thumb"><img src="images/p(3).jpg" middleurl="images/p(3).jpg" bigurl="images/p(3).jpg" /></li>
+			<li id="img_3" class="thumb"><img src="images/p(4).jpg" middleurl="images/p(4).jpg" bigurl="images/p(4).jpg" /></li>
+			<li id="img_4" class="thumb"><img src="images/p(5).jpg" middleurl="images/p(5).jpg" bigurl="images/p(5).jpg" /></li>
+			<li id="img_5" class="thumb"><img src="images/p(6).jpg" middleurl="images/p(6).jpg" bigurl="images/p(6).jpg" /></li>
+			<li id="img_6" class="thumb"><img src="images/p(7).jpg" middleurl="images/p(7).jpg" bigurl="images/p(7).jpg" /></li>
+			<li id="img_7" class="thumb"><img src="images/p(8).jpg" middleurl="images/p(8).jpg" bigurl="images/p(8).jpg" /></li>
+			<li id="img_8" class="thumb"><img src="images/p(9).jpg" middleurl="images/p(9).jpg" bigurl="images/p(9).jpg" /></li>
+			<li id="img_9" class="thumb"><img src="images/p(10).jpg" middleurl="images/p(10).jpg" bigurl="images/p(10).jpg" /></li>
+			<li id="img_10" class="thumb"><img src="images/p(11).jpg" middleurl="images/p(11).jpg" bigurl="images/p(11).jpg" /></li>
+			<li id="img_11" class="thumb"><img src="images/p(12).jpg" middleurl="images/p(12).jpg" bigurl="images/p(12).jpg" /></li>
+			<li id="img_12" class="thumb"><img src="images/p(13).jpg" middleurl="images/p(13).jpg" bigurl="images/p(13).jpg" /></li>
+			<li id="img_13" class="thumb"><img src="images/p(14).jpg" middleurl="images/p(14).jpg" bigurl="images/p(14).jpg" /></li>
+			<li id="img_14" class="thumb"><img src="images/p(15).jpg" middleurl="images/p(15).jpg" bigurl="images/p(15).jpg" /></li>
+			<li id="img_15" class="thumb"><img src="images/p(16).jpg" middleurl="images/p(16).jpg" bigurl="images/p(16).jpg" /></li>
+			<li id="img_16" class="thumb"><img src="images/p(17).jpg" middleurl="images/p(17).jpg" bigurl="images/p(17).jpg" /></li>
+			<li id="img_17" class="thumb"><img src="images/p(18).jpg" middleurl="images/p(18).jpg" bigurl="images/p(18).jpg" /></li>
+			<li id="img_18" class="thumb"><img src="images/p(19).jpg" middleurl="images/p(19).jpg" bigurl="images/p(19).jpg" /></li>
+			<li id="img_19" class="thumb"><img src="images/p(20).jpg" middleurl="images/p(20).jpg" bigurl="images/p(20).jpg" /></li>
+			<li id="img_20" class="thumb"><img src="images/p(21).jpg" middleurl="images/p(21).jpg" bigurl="images/p(21).jpg" /></li>
+			<li id="img_21" class="thumb"><img src="images/p(22).jpg" middleurl="images/p(22).jpg" bigurl="images/p(22).jpg" /></li>
+			<li id="img_22" class="thumb"><img src="images/p(23).jpg" middleurl="images/p(23).jpg" bigurl="images/p(23).jpg" /></li>
+			<li id="img_23" class="thumb"><img src="images/p(24).jpg" middleurl="images/p(24).jpg" bigurl="images/p(24).jpg" /></li>
+			<li id="img_24" class="thumb"><img src="images/p(25).jpg" middleurl="images/p(25).jpg" bigurl="images/p(25).jpg" /></li>
+			<li id="img_25" class="thumb"><img src="images/p(26).jpg" middleurl="images/p(26).jpg" bigurl="images/p(26).jpg" /></li>
+			<li id="img_26" class="thumb"><img src="images/p(27).jpg" middleurl="images/p(27).jpg" bigurl="images/p(27).jpg" /></li>
+			<li id="img_27" class="thumb"><img src="images/p(28).jpg" middleurl="images/p(28).jpg" bigurl="images/p(28).jpg" /></li>
+			<li id="img_28" class="thumb"><img src="images/p(29).jpg" middleurl="images/p(29).jpg" bigurl="images/p(29).jpg" /></li>
+			<li id="img_29" class="thumb"><img src="images/p(30).jpg" middleurl="images/p(30).jpg" bigurl="images/p(30).jpg" /></li>
+			<li id="img_30" class="thumb"><img src="images/p(31).jpg" middleurl="images/p(31).jpg" bigurl="images/p(31).jpg" /></li>
+			<li id="img_31" class="thumb"><img src="images/p(32).jpg" middleurl="images/p(32).jpg" bigurl="images/p(32).jpg" /></li>
+			<li id="img_32" class="thumb"><img src="images/p(33).jpg" middleurl="images/p(33).jpg" bigurl="images/p(33).jpg" /></li>
+			<li id="img_33" class="thumb"><img src="images/p(34).jpg" middleurl="images/p(34).jpg" bigurl="images/p(34).jpg" /></li>
+			<li id="img_34" class="thumb"><img src="images/p(35).jpg" middleurl="images/p(35).jpg" bigurl="images/p(35).jpg" /></li>
+			<li id="img_35" class="thumb"><img src="images/p(36).jpg" middleurl="images/p(36).jpg" bigurl="images/p(36).jpg" /></li>
+		</ul>
+	</div>
+	<div id="ps">
+		<a id="ps_pre" class="ps_pre" href="javascript:void(0);">preview</a><a id="ps_next" class="ps_next" href="javascript:void(0);">next</a>
+		<a id="photo_big_url" href="#1">
+			<img id="big_img" src="images/lzimg.gif"/>
+		</a>
+	</div>
+</div>
+<script src="js/jquery-1.5.1.min.js"></script>
+<script src="js/dk_tools.js"></script>
+<script>
+
+var SCPhotoAlbum = function(containerId, thumbsId, showContainerId){
+	this.configs = {
+		thumbWidth: 68,
+		thumbsWidth: 680,
+		showWidth: 718,
+		showHeight: 800,
+		thumbPrefix: 'img_',
+		selectedClass: 'selected',
+		middleurl: 'middleurl',
+		bigurl: 'bigurl',
+		photoGallaryPre: 'pg_pre',
+		photoGallaryNext: 'pg_next',
+		photoShowPre: 'ps_pre',
+		photoShowNext: 'ps_next',
+		thumb: 'thumb'
+	}
+	this.cursor = 0;
+	this.containerId = containerId;
+	this.thumbsId = thumbsId;
+	this.showContainerId = showContainerId;
+	this.total = $('#' + thumbsId + ' li').length;
+	this.isRunning = false;
+	this.initialize();
+};
+
+SCPhotoAlbum.prototype = {
+	initialize: function(){
+		this.showThumbCount = parseInt(this.configs.thumbsWidth / this.configs.thumbWidth);
+		this.maxOffset = (this.total - this.showThumbCount) * this.configs.thumbWidth;
+		//$('.' + this.configs.photoShowNext).hide();
+		//$('.' + this.configs.photoShowPre).hide();
+		this.initDom();
+		this.initEvent();
+	},
+	initDom: function(){
+		this.show(0);
+		$('#' + this.thumbsId).css('width', this.configs.thumbWidth * this.total);
+	},
+	initEvent: function(){
+		$('#' + this.containerId).click(dk.bind(this,this.eventDelegate));
+		/*
+		$('#' + this.showContainerId).hover(dk.bind(this, function(e){
+			$('.' + this.configs.photoShowNext).fadeIn('fast');
+			$('.' + this.configs.photoShowPre).fadeIn('fast');
+		}), dk.bind(this, function(e){
+			$('.' + this.configs.photoShowNext).fadeOut('fast');
+			$('.' + this.configs.photoShowPre).fadeOut('fast');
+		}));
+		*/
+	},
+	eventDelegate: function(e){
+		if(this.isRunning){
+			return;
+		}else{
+			this.isRunning = true;
+		}
+		var target = e.target;
+		if(target.className == this.configs.photoGallaryPre){
+			this.gallaryPre(5);
+		}else if(target.className == this.configs.photoGallaryNext){
+			this.gallaryNext(5);
+		}else if(target.className == this.configs.photoShowPre){
+			this.preview();
+		}else if(target.className == this.configs.photoShowNext){
+			this.next();
+		}else if(target.parentNode.className == this.configs.thumb){
+			$('#' + this.configs.thumbPrefix + this.cursor).removeClass(this.selectedClass);
+			var currId = target.parentNode.id;
+			currId = parseInt(currId.replace(this.configs.thumbPrefix, ''));
+			this.show(currId);
+			this.cursor = currId;
+		}
+		
+	},
+	gallaryPre: function(step){
+		var value,
+			thumbWidth = this.configs.thumbWidth, 
+			thumbsId = this.thumbsId, 
+			currOffset = Math.abs(parseInt($('#' + thumbsId).css('left')));
+		if(step){
+			var moveOffset = thumbWidth * step;
+			if(currOffset > moveOffset){
+				value = '+=' + moveOffset + 'px';
+			}else{
+				value = '+=' + currOffset + 'px';
+			}
+			
+		}else{
+			value = '+=' + this.configs.thumbWidth + 'px';
+		}
+		
+		if(parseInt($('#' + this.thumbsId).css('left')) >= 0)
+			return;
+		$('#' + this.thumbsId).animate({'left': value},'fast', 'linear', dk.bind(this, function(){
+			this.isRunning = false;
+		}));
+	},
+	gallaryNext: function(step){
+		var value, 
+			thumbWidth = this.configs.thumbWidth, 
+			thumbsId = this.thumbsId, 
+			currOffset = Math.abs(parseInt($('#' + thumbsId).css('left')));
+		if(step){
+			var moveOffset = thumbWidth * step;
+			
+			if(this.maxOffset - currOffset > moveOffset)
+				value = '-=' + moveOffset + 'px';
+			else{
+				value = '-=' + (this.maxOffset - currOffset) + 'px';
+			}
+		}else{
+			value = '-=' + thumbWidth + 'px';
+		}
+		if(parseInt($('#' + thumbsId).css('left')) <= -(thumbWidth * this.total - this.configs.thumbsWidth)){
+			return;
+		}
+		$('#' + thumbsId).animate({'left': value}, 'fast', "linear", dk.bind(this, function(){
+			this.isRunning  =false;
+		}));
+	},
+	next: function(){
+		$('#' + this.configs.thumbPrefix + this.cursor).removeClass(this.configs.selectedClass);
+		var left = $('#' + this.configs.thumbPrefix + this.cursor)[0].offsetLeft + parseInt($('#' + this.thumbsId).css('left'));
+		if(left >= this.configs.thumbWidth * (this.showThumbCount - 1)){
+			if(this.cursor != this.total - 1){
+				this.gallaryNext();
+			}else{
+				this.gallaryPre(this.total - this.showThumbCount);
+			}
+		}
+		if(this.cursor >= this.total - 1){
+			this.cursor = 0;
+		}else{
+			this.cursor ++;
+		}
+		this.show(this.cursor);
+	},
+	preview: function(){
+		$('#' + this.configs.thumbPrefix + this.cursor).removeClass(this.configs.selectedClass);
+		var left = $('#' + this.configs.thumbPrefix + this.cursor)[0].offsetLeft + parseInt($('#' + this.thumbsId).css('left'));
+		if(left <= 0){
+			if(this.cursor != 0){
+				this.gallaryPre();
+			}else{
+				this.gallaryNext(this.total - this.showThumbCount);
+			}
+		}
+		if(this.cursor <= 0){
+			this.cursor = this.total - 1;
+		}else{
+			this.cursor --;
+		}
+		this.show(this.cursor);
+	},
+	show: function(cursor){
+		$('#big_img').fadeOut('fast',dk.bind(this, function(){
+			$('#' + this.configs.thumbPrefix + cursor).addClass(this.configs.selectedClass);
+			var tempImg = new Image();
+			tempImg.src = $('#' + this.configs.thumbPrefix + cursor + ' img').attr('middleurl');
+			$('#photo_big_url').attr('href', $('#' + this.configs.thumbPrefix + cursor + ' img').attr('bigurl'));
+			if(parseInt(tempImg.width) < this.configs.showWidth){
+				$('#big_img').attr('width', tempImg.width);
+			}else{
+				$('#big_img').attr('width', this.configs.showWidth);
+			}
+			$('#big_img').css('margin-top', - tempImg.height / 2);
+			$('#big_img').attr('src', tempImg.src);
+			$('#big_img').fadeIn('fast', dk.bind(this, function(){
+				this.isRunning = false;
+			}));
+		}));
+		
+	},
+	canNext: function(){},
+	cantNext: function(){}
+};
+
+var scpa = new SCPhotoAlbum('pa_b', 'pts', 'ps');
+/*
+	var cursor = 0;
+	var total = $('#pts li').length;
+	showImg(0);
+	
+	$('#pts').css('width', 56 * total);
+	$('#pts li').click(function(e){
+		var imgSrc = this.getElementsByTagName('img')[0].src;
+		var bigImg = new Image();
+		bigImg.src = imgSrc;
+		if(parseInt(bigImg.width) < 958){
+			$('#big_img').attr('width', bigImg.width);
+		}else{
+			$('#big_img').attr('width', 958);
+		}
+		
+		$('#big_img').attr('src', imgSrc);
+		$('#img_' + cursor).removeClass('selected');
+		$(this).addClass('selected');
+		cursor = parseInt(this.id.split('_')[1]);
+	});
+	
+	$('#pg_next').click(function(e){
+		gallaryLeft();
+	});
+	$('#pg_pre').click(function(e){
+		gallaryRight();
+	});
+	
+	$('#ps_next').click(function(e){
+		$('#img_' + cursor).removeClass('selected');
+		
+		var left = $('#img_' + cursor)[0].offsetLeft + parseInt($('#pts').css('left'));
+		if(left >= 56 * 15){
+			if(cursor != total - 1){
+				gallaryLeft();
+			}
+			else{
+				gallaryRight(total - parseInt( 920 / 56));
+			}
+		}
+		
+		if(cursor >= total - 1){
+			cursor = 0;
+		}else{
+			cursor ++;
+		}
+		showImg(cursor);
+	});
+	$('#ps_pre').click(function(e){
+		$('#img_' + cursor).removeClass('selected');
+		var left = $('#img_' + cursor)[0].offsetLeft + parseInt($('#pts').css('left'));
+		if(left <= 0){
+			if(cursor != 0){
+				gallaryRight();
+			}
+			else{
+				gallaryLeft(total - parseInt( 920 / 56));
+			}
+		}
+		if(cursor <= 0){
+			cursor = total - 1;
+		}else{
+			cursor --;
+		}
+		
+		showImg(cursor);
+	});
+	
+	function nextImg(){
+		cursor ++;
+	}
+	function preImg(){
+		cursor --;
+	}
+	
+	function showImg(cursor){
+		$('#img_' + cursor).addClass('selected');
+		var tempImg = new Image();
+		tempImg.src = $('#img_' + cursor + ' img').attr('src');
+		if(parseInt(tempImg.width) < 958){
+			$('#big_img').attr('width', tempImg.width);
+		}else{
+			$('#big_img').attr('width', 958);
+		}
+		$('#big_img').css('margin-top', - tempImg.height / 2);
+		$('#big_img').attr('src', tempImg.src);
+	}
+	
+	function gallaryLeft(step){
+		var value;
+		if(step){
+			value = '-=' + (56 * step) + 'px';
+		}else{
+			value = '-=56px';
+		}
+		if(parseInt($('#pts').css('left')) <= -(54 *36 - 920)){
+			return;
+		}
+		$('#pts').animate({'left': value}, 'fast');
+	}
+	function gallaryRight(step){
+		var value;
+		if(step){
+			value = '+=' + (56 * step) + 'px';
+		}else{
+			value = '+=56px';
+		}
+		
+		if(parseInt($('#pts').css('left')) >= 0)
+			return;
+		$('#pts').animate({'left': value},'fast');
+	}
+	*/
+</script>
+</body>
+</html>

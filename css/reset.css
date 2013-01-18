@@ -1,0 +1,18 @@
+@charset "utf-8";
+/*
+Author:DK
+CreateDate:2010.1.1
+EdtiDate:
+Blog:http://www.dklogs.net
+Email:xiaobaov2@gmail.com
+*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, address, code, em, img, strong, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, tbody, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-weight:normal; font-size: 12px; font-family:Arial, Helvetica, sans-serif; }
+body { line-height: 1; color: #000; background: #FFF; }
+ol, ul, li { list-style: none; }
+table { border-collapse: separate; border-spacing: 0; }
+caption, th, td { text-align: left; font-weight: normal;}
+
+.clearfix:after { content:"."; display:block; height:0; clear:both; visibility:hidden; } 
+.clearfix { display:inline-block; } 
+.clearfix {display:block;}
